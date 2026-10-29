@@ -1,0 +1,1084 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leander Marcellio | Portfolio</title>
+
+    <style>
+        /* ===== RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #080808;
+            color: #f5f5f5;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(#ffffff08 1px, transparent 1px),
+                linear-gradient(90deg, #ffffff08 1px, transparent 1px);
+            background-size: 45px 45px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            width: min(1050px, 88%);
+            margin: auto;
+        }
+
+        .accent,
+        .section-label {
+            color: #b8ff65;
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-label {
+            font-size: 12px;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(28px, 5vw, 42px);
+            line-height: 1.3;
+            margin-bottom: 18px;
+        }
+
+        .section-desc {
+            color: #999;
+            max-width: 600px;
+            margin-bottom: 35px;
+        }
+
+        /* ===== NAVBAR ===== */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #080808ed;
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid #ffffff12;
+        }
+
+        nav {
+            width: min(1050px, 88%);
+            min-height: 75px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 19px;
+            font-weight: bold;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #b8ff65;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 12px;
+            color: #aaa;
+            transition: .3s;
+        }
+
+        .nav-links a:hover {
+            color: #b8ff65;
+        }
+
+        .menu-toggle {
+            display: none;
+            padding: 7px 12px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            color: white;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            padding: 70px 0;
+        }
+
+        .hero-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 14px;
+            margin-bottom: 25px;
+            border: 1px solid #333;
+            border-radius: 30px;
+            background: #111;
+            color: #bbb;
+            font-size: 12px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #b8ff65;
+            box-shadow: 0 0 10px #b8ff6580;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 5vw, 67px);
+            line-height: 1.1;
+            letter-spacing: -3px;
+            margin-bottom: 22px;
+        }
+
+        .hero p {
+            max-width: 550px;
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 19px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: bold;
+            transition: .3s;
+        }
+
+        .btn-primary {
+            background: #b8ff65;
+            color: #080808;
+        }
+
+        .btn-primary:hover {
+            background: white;
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            border: 1px solid #383838;
+        }
+
+        .btn-secondary:hover {
+            border-color: #b8ff65;
+            color: #b8ff65;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ffffff15;
+        }
+
+        .hero-meta div {
+            color: #777;
+            font-size: 11px;
+        }
+
+        .hero-meta strong {
+            display: block;
+            color: #eee;
+            font-size: 13px;
+        }
+
+        /* ===== FOTO DIGANTUNG ===== */
+        .hanging-photo {
+            width: 360px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            align-self: flex-start;
+            margin-top: 20px;
+            transform-origin: top center;
+            animation: swing 5s ease-in-out infinite;
+        }
+
+        /* Tali selalu tepat di tengah */
+        .rope {
+            width: 2px;
+            height: 75px;
+            flex-shrink: 0;
+            background: linear-gradient(
+                to right,
+                #555,
+                #ddd,
+                #777
+            );
+        }
+
+        /* Bingkai polaroid */
+        .photo-frame {
+            width: 100%;
+            padding: 18px 18px 28px;
+            background: #f0f0e9;
+            border: 1px solid #777;
+            border-radius: 3px;
+            box-shadow: 0 20px 45px #0009;
+            box-sizing: border-box;
+        }
+
+        .photo-frame img {
+            display: block;
+            width: 100%;
+            height: 460px;
+            object-fit: cover;
+            object-position: center;
+            background: #222;
+            filter: none;
+            image-rendering: auto;
+        }
+
+        .photo-frame p {
+            color: #202020;
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-top: 18px;
+            margin-bottom: 0;
+        }
+
+        @keyframes swing {
+            0%, 100% {
+                transform: rotate(3deg);
+            }
+
+            50% {
+                transform: rotate(-3deg);
+            }
+        }
+
+        /* ===== ABOUT ===== */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 45px;
+            align-items: start;
+        }
+
+        .about-text p {
+            color: #999;
+            margin-bottom: 18px;
+        }
+
+        .info-card {
+            padding: 25px;
+            border: 1px solid #292929;
+            border-radius: 12px;
+            background: #101010;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 13px 0;
+            border-bottom: 1px solid #252525;
+            font-size: 12px;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-row span:first-child {
+            color: #777;
+        }
+
+        .info-row span:last-child {
+            text-align: right;
+        }
+
+        /* ===== PROJECTS ===== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .project-card {
+            padding: 25px;
+            background: #101010;
+            border: 1px solid #292929;
+            border-radius: 12px;
+            transition: .3s;
+        }
+
+        .project-card:hover {
+            border-color: #b8ff65;
+            transform: translateY(-5px);
+        }
+
+        .project-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .project-icon {
+            width: 44px;
+            height: 44px;
+            display: grid;
+            place-items: center;
+            border: 1px solid #333;
+            border-radius: 9px;
+            font-size: 20px;
+            color: #b8ff65;
+        }
+
+        .project-number {
+            color: #666;
+            font-size: 11px;
+        }
+
+        .project-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            color: #999;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .tag {
+            padding: 4px 9px;
+            background: #1a1a1a;
+            border: 1px solid #303030;
+            color: #aaa;
+            border-radius: 5px;
+            font-size: 10px;
+        }
+
+        /* ===== TECH STACK ===== */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .tech-card {
+            padding: 20px 10px;
+            text-align: center;
+            background: #101010;
+            border: 1px solid #292929;
+            border-radius: 9px;
+            transition: .3s;
+        }
+
+        .tech-card:hover {
+            background: #171d10;
+            border-color: #b8ff65;
+        }
+
+        .tech-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #b8ff65;
+        }
+
+        .tech-card h3 {
+            font-size: 12px;
+        }
+
+        .tech-card p {
+            color: #777;
+            font-size: 10px;
+        }
+
+        /* ===== CERTIFICATES ===== */
+        .cert-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .cert-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: #101010;
+            border: 1px solid #292929;
+            border-radius: 10px;
+        }
+
+        .cert-card h3 {
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .cert-card p {
+            color: #888;
+            font-size: 11px;
+        }
+
+        .cert-year {
+            color: #b8ff65;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        /* ===== CONTACT ===== */
+        .contact-box {
+            padding: 50px 25px;
+            text-align: center;
+            background: #101010;
+            border: 1px solid #333;
+            border-radius: 15px;
+        }
+
+        .contact-box h2 {
+            font-size: clamp(28px, 5vw, 43px);
+            line-height: 1.3;
+            margin-bottom: 15px;
+        }
+
+        .contact-box p {
+            color: #999;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            padding: 25px 0;
+            border-top: 1px solid #222;
+            color: #777;
+            font-size: 11px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* ===== ANIMASI SCROLL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+
+        .reveal.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== TABLET ===== */
+        @media (max-width: 1000px) {
+            .hero {
+                gap: 25px;
+            }
+
+            .hanging-photo {
+                width: 300px;
+            }
+
+            .photo-frame img {
+                height: 380px;
+            }
+        }
+
+        /* ===== MOBILE ===== */
+        @media (max-width: 650px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 75px;
+                left: 0;
+                width: 100%;
+                padding: 20px 6%;
+                background: #0b0b0b;
+                border-bottom: 1px solid #333;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero {
+                min-height: auto;
+                flex-direction: column-reverse;
+                align-items: center;
+                padding: 45px 0 75px;
+                gap: 35px;
+            }
+
+            .hero-content {
+                width: 100%;
+            }
+
+            .hero h1 {
+                font-size: clamp(38px, 10vw, 55px);
+                letter-spacing: -2px;
+            }
+
+            .hanging-photo {
+                width: 100%;
+                margin-top: 0;
+                align-self: center;
+            }
+
+            .rope {
+                height: 60px;
+            }
+
+            .photo-frame {
+                width: min(280px, 85vw);
+                padding: 14px 14px 22px;
+            }
+
+            .photo-frame img {
+                height: 340px;
+            }
+
+            .about-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .section {
+                padding: 70px 0;
+            }
+
+            .hero-meta {
+                gap: 18px;
+            }
+
+            .cert-card {
+                align-items: flex-start;
+            }
+        }
+
+        /* Hormati preferensi pengguna yang mengurangi animasi */
+        @media (prefers-reduced-motion: reduce) {
+            .hanging-photo {
+                animation: none;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header>
+        <nav>
+            <a href="#home" class="logo">LEANDER<span>.</span></a>
+
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                aria-label="Buka menu"
+                aria-expanded="false">
+                ☰
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#tech">Tech Stack</a></li>
+                <li><a href="#certificates">Certificates</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- HOME -->
+        <section class="hero container" id="home">
+
+            <div class="hero-content reveal">
+                <div class="status">
+                    <span class="status-dot"></span>
+                    Mahasiswa Teknik Informatika
+                </div>
+
+                <h1>
+                    Hello, I'm<br>
+                    <span class="accent">Leander Marcellio.</span>
+                </h1>
+
+                <p>
+                    Seorang mahasiswa Teknik Informatika yang memiliki
+                    ketertarikan besar pada teknologi, pemrograman, dan
+                    pengembangan solusi digital. Saya senang mempelajari
+                    hal-hal baru, mengeksplorasi berbagai teknologi, serta
+                    mengasah kemampuan dalam membangun program yang kreatif
+                    dan bermanfaat. Bagi saya, proses belajar bukan hanya
+                    tentang memahami teori, tetapi juga bagaimana
+                    menerapkannya untuk menyelesaikan masalah di kehidupan
+                    nyata.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">
+                        Explore My Work ↗
+                    </a>
+
+                    <a href="#about" class="btn btn-secondary">
+                        About Me
+                    </a>
+                </div>
+
+                <div class="hero-meta">
+                    <div>
+                        <strong>Informatics</strong>
+                        Field of Study
+                    </div>
+
+                    <div>
+                        <strong>C++ & Web</strong>
+                        Learning Journey
+                    </div>
+
+                    <div>
+                        <strong>Indonesia</strong>
+                        Based In
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOTO PROFIL DIGANTUNG -->
+            <div class="hanging-photo">
+                <div class="rope"></div>
+
+                <div class="photo-frame">
+                    <img
+                        src="foto.jpg"
+                        alt="Foto profil Leander Marcellio">
+
+                    <p>LEANDER MARCELLIO</p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ABOUT -->
+        <section class="section" id="about">
+            <div class="container reveal">
+                <p class="section-label">01 / About Me</p>
+
+                <h2 class="section-title">
+                    Getting to know <span class="accent">me.</span>
+                </h2>
+
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p>
+                            Halo! Saya Leander Marcellio, mahasiswa
+                            Teknik Informatika Universitas Padjadjaran.
+                        </p>
+
+                        <p>
+                            Saya memiliki ketertarikan pada dunia teknologi,
+                            khususnya pemrograman dan pengembangan aplikasi.
+                            Saya senang mempelajari hal baru, menyelesaikan
+                            masalah, dan mengembangkan ide menjadi karya.
+                        </p>
+
+                        <p>
+                            Di luar bidang teknologi, saya juga menyukai
+                            musik dan kegiatan yang membantu saya belajar
+                            bekerja sama dengan orang lain.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-row">
+                            <span>Nama</span>
+                            <span>Leander Marcellio</span>
+                        </div>
+
+                        <div class="info-row">
+                            <span>Pendidikan</span>
+                            <span>Universitas Padjadjaran</span>
+                        </div>
+
+                        <div class="info-row">
+                            <span>Program Studi</span>
+                            <span>Teknik Informatika</span>
+                        </div>
+
+                        <div class="info-row">
+                            <span>Fokus</span>
+                            <span>Programming & Technology</span>
+                        </div>
+
+                        <div class="info-row">
+                            <span>Hobi</span>
+                            <span>Music & Learning</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section class="section" id="projects">
+            <div class="container reveal">
+                <p class="section-label">02 / My Work</p>
+
+                <h2 class="section-title">
+                    Selected <span class="accent">projects.</span>
+                </h2>
+
+                <p class="section-desc">
+                    Beberapa proyek untuk menampilkan perjalanan
+                    belajar dan pengembangan kemampuan saya.
+                </p>
+
+                <div class="projects-grid">
+
+                    <article class="project-card">
+                        <div class="project-top">
+                            <div class="project-icon">⌘</div>
+                            <span class="project-number">PROJECT 01</span>
+                        </div>
+
+                        <h3>Personal Portfolio</h3>
+
+                        <p>
+                            Website untuk memperkenalkan diri, menampilkan
+                            keahlian, dan mendokumentasikan proyek yang
+                            telah dikerjakan.
+                        </p>
+
+                        <div class="tags">
+                            <span class="tag">HTML</span>
+                            <span class="tag">CSS</span>
+                            <span class="tag">JavaScript</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-top">
+                            <div class="project-icon">⌨</div>
+                            <span class="project-number">PROJECT 02</span>
+                        </div>
+
+                        <h3>C++ Application</h3>
+
+                        <p>
+                            Program sederhana untuk melatih logika,
+                            fungsi, percabangan, perulangan, dan
+                            struktur data.
+                        </p>
+
+                        <div class="tags">
+                            <span class="tag">C++</span>
+                            <span class="tag">Problem Solving</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-top">
+                            <div class="project-icon">▤</div>
+                            <span class="project-number">PROJECT 03</span>
+                        </div>
+
+                        <h3>Study Project</h3>
+
+                        <p>
+                            Dokumentasi proyek perkuliahan yang mencakup
+                            proses analisis, perancangan, dan implementasi
+                            solusi.
+                        </p>
+
+                        <div class="tags">
+                            <span class="tag">Programming</span>
+                            <span class="tag">Documentation</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-top">
+                            <div class="project-icon">✦</div>
+                            <span class="project-number">PROJECT 04</span>
+                        </div>
+
+                        <h3>Future Project</h3>
+
+                        <p>
+                            Tempat menampilkan karya berikutnya seiring
+                            bertambahnya pengalaman di bidang teknologi.
+                        </p>
+
+                        <div class="tags">
+                            <span class="tag">In Progress</span>
+                            <span class="tag">Learning</span>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- TECH STACK -->
+        <section class="section" id="tech">
+            <div class="container reveal">
+                <p class="section-label">03 / Technologies</p>
+
+                <h2 class="section-title">
+                    My tech <span class="accent">stack.</span>
+                </h2>
+
+                <p class="section-desc">
+                    Teknologi dan kemampuan yang sedang saya pelajari.
+                </p>
+
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <div class="tech-icon">C++</div>
+                        <h3>C++</h3>
+                        <p>Programming</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <div class="tech-icon">🌐</div>
+                        <h3>HTML</h3>
+                        <p>Web Structure</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <div class="tech-icon">🎨</div>
+                        <h3>CSS</h3>
+                        <p>Web Styling</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <div class="tech-icon">JS</div>
+                        <h3>JavaScript</h3>
+                        <p>Interactivity</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <div class="tech-icon">⌘</div>
+                        <h3>Git</h3>
+                        <p>Version Control</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <div class="tech-icon">◈</div>
+                        <h3>Problem Solving</h3>
+                        <p>Logical Thinking</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <div class="tech-icon">▣</div>
+                        <h3>VS Code</h3>
+                        <p>Code Editor</p>
+                    </div>
+
+                    <div class="tech-card">
+                        <div class="tech-icon">⌘</div>
+                        <h3>GitHub</h3>
+                        <p>Repository</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CERTIFICATES -->
+        <section class="section" id="certificates">
+            <div class="container reveal">
+                <p class="section-label">04 / Achievements</p>
+
+                <h2 class="section-title">
+                    Certificates & <span class="accent">learning.</span>
+                </h2>
+
+                <p class="section-desc">
+                    Sertifikat, kompetisi, pelatihan, dan pencapaian
+                    yang dapat kamu tambahkan.
+                </p>
+
+                <div class="cert-list">
+                    <div class="cert-card">
+                        <div>
+                            <h3>Sertifikat / Pelatihan 01</h3>
+                            <p>Nama penyelenggara atau institusi</p>
+                        </div>
+                        <span class="cert-year">2026</span>
+                    </div>
+
+                    <div class="cert-card">
+                        <div>
+                            <h3>Kompetisi / Achievement</h3>
+                            <p>Nama kompetisi atau pencapaian</p>
+                        </div>
+                        <span class="cert-year">2026</span>
+                    </div>
+
+                    <div class="cert-card">
+                        <div>
+                            <h3>Course / Learning Program</h3>
+                            <p>Nama kursus atau program pembelajaran</p>
+                        </div>
+                        <span class="cert-year">2026</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="section" id="contact">
+            <div class="container reveal">
+                <div class="contact-box">
+                    <p class="section-label">05 / Get In Touch</p>
+
+                    <h2>
+                        Let's build something<br>
+                        <span class="accent">meaningful.</span>
+                    </h2>
+
+                    <p>
+                        Terbuka untuk belajar, berdiskusi, dan
+                        berkolaborasi dalam proyek menarik.
+                    </p>
+
+                    <a href="mailto:emailkamu@example.com"
+                       class="btn btn-primary">
+                        Contact Me ↗
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-content">
+            <span>© 2026 Leander Marcellio</span>
+            <span>Built with HTML, CSS & JavaScript.</span>
+        </div>
+    </footer>
+
+    <script>
+        // Navigasi mobile
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        menuToggle.addEventListener("click", function () {
+            const isOpen = navLinks.classList.toggle("active");
+
+            menuToggle.setAttribute("aria-expanded", isOpen);
+            menuToggle.textContent = isOpen ? "✕" : "☰";
+        });
+
+        // Tutup menu setelah tautan dipilih
+        document.querySelectorAll(".nav-links a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                navLinks.classList.remove("active");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.textContent = "☰";
+            });
+        });
+
+        // Animasi saat bagian website terlihat
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll(".reveal").forEach(function (element) {
+            observer.observe(element);
+        });
+    </script>
+
+</body>
+</html>
