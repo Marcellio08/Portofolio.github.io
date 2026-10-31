@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Portfolio | Leander Marcellio</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #080808;
+            --card: #111111;
+            --accent: #b8ff65;
+            --text: #f5f5f5;
+            --muted: #a0a0a0;
+            --border: #292929;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(1120px, 90%);
+            margin: 0 auto;
+        }
+
+        .accent {
+            color: var(--accent);
+        }
+
+        .section-label {
+            display: inline-block;
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        /* BACKGROUND GRID + GLOW */
+
+        .bg-effect {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(184, 255, 101, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(184, 255, 101, 0.07) 1px, transparent 1px);
+            background-size: 40px 40px;
+            -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 85%);
+            mask-image: radial-gradient(ellipse at center, #000 30%, transparent 85%);
+        }
+
+        .bg-glow {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle,
+                rgba(184, 255, 101, 0.22),
+                transparent 65%
+            );
+            will-change: transform;
+        }
+
+        .bg-glow-1 {
+            width: 600px;
+            height: 600px;
+            top: -150px;
+            left: -150px;
+            animation: glowDrift1 14s ease-in-out infinite;
+        }
+
+        .bg-glow-2 {
+            width: 500px;
+            height: 500px;
+            bottom: -150px;
+            right: -120px;
+            animation: glowDrift2 18s ease-in-out infinite;
+        }
+
+        @keyframes glowDrift1 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(120px, 80px); }
+        }
+
+        @keyframes glowDrift2 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-100px, -70px); }
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(8, 8, 8, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .back-link {
+            font-size: 13px;
+            color: var(--muted);
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        /* BUTTONS */
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease,
+                color 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #080808;
+        }
+
+        .btn-primary:hover {
+            background: #d0ffa0;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* PROJECT HERO */
+
+        .project-hero {
+            padding: 60px 0 35px;
+        }
+
+        .project-hero h1 {
+            font-size: clamp(38px, 7vw, 66px);
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+
+        .project-intro {
+            max-width: 680px;
+            color: var(--muted);
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 28px;
+        }
+
+        .tag {
+            padding: 5px 10px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: var(--accent);
+            font-size: 11px;
+        }
+
+        .project-meta {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            max-width: 680px;
+            margin-bottom: 28px;
+        }
+
+        .meta-item {
+            padding: 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--card);
+        }
+
+        .meta-item span {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+
+        .meta-item strong {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 13px;
+        }
+
+        /* BROWSER PREVIEW */
+
+        .preview-section {
+            padding: 20px 0 70px;
+        }
+
+        .browser {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--card);
+            overflow: hidden;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
+        }
+
+        .browser-bar {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            background: #0d0d0d;
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .browser-dots i {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #333;
+        }
+
+        .browser-dots i:first-child {
+            background: var(--accent);
+        }
+
+        .browser-url {
+            flex: 1;
+            min-width: 0;
+            padding: 5px 12px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: var(--muted);
+            font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .browser-screen {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            background: var(--bg);
+        }
+
+        .browser-screen iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1280px;
+            height: 800px;
+            border: 0;
+            transform-origin: top left;
+            pointer-events: none;
+        }
+
+        .preview-note {
+            margin-top: 14px;
+            color: var(--muted);
+            font-size: 12px;
+            text-align: center;
+        }
+
+        /* HIGHLIGHTS */
+
+        .highlights {
+            padding: 20px 0 80px;
+        }
+
+        .section-title {
+            font-size: clamp(28px, 5vw, 40px);
+            line-height: 1.2;
+            margin-bottom: 30px;
+        }
+
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .highlight-card {
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--card);
+            transition:
+                border-color 0.3s ease,
+                transform 0.3s ease;
+        }
+
+        .highlight-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .highlight-number {
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+
+        .highlight-card h3 {
+            font-size: 19px;
+            margin-bottom: 8px;
+        }
+
+        .highlight-card p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* NEXT PROJECT */
+
+        .next-box {
+            padding: 40px 30px;
+            margin-bottom: 70px;
+            border: 1px solid var(--border);
+            background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(184, 255, 101, 0.09),
+                    transparent 45%
+                ),
+                var(--card);
+            border-radius: 18px;
+            text-align: center;
+        }
+
+        .next-box h2 {
+            font-size: clamp(26px, 5vw, 38px);
+            margin-bottom: 20px;
+        }
+
+        .next-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 13px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            padding: 25px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .footer-content span {
+            color: var(--accent);
+        }
+
+        /* SCROLL ANIMATION */
+
+        .reveal {
+            opacity: 0;
+            transition:
+                opacity 0.8s ease var(--d, 0s),
+                translate 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s),
+                transform 0.3s ease,
+                border-color 0.3s ease;
+            will-change: opacity, translate;
+        }
+
+        .reveal.from-left {
+            translate: -100px 0;
+        }
+
+        .reveal.from-right {
+            translate: 100px 0;
+        }
+
+        .reveal.show {
+            opacity: 1;
+            translate: 0 0;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 650px) {
+            html {
+                scroll-padding-top: 75px;
+            }
+
+            .nav-container {
+                min-height: 65px;
+            }
+
+            .project-hero {
+                padding: 40px 0 25px;
+            }
+
+            .project-meta {
+                grid-template-columns: 1fr;
+            }
+
+            .highlight-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .highlight-card {
+                padding: 22px;
+            }
+
+            .browser-bar {
+                padding: 10px 12px;
+            }
+
+            .next-box {
+                padding: 32px 20px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .bg-grid {
+                background-size: 32px 32px;
+            }
+
+            .bg-glow-1 {
+                width: 380px;
+                height: 380px;
+            }
+
+            .bg-glow-2 {
+                width: 320px;
+                height: 320px;
+            }
+
+            .reveal.from-left {
+                translate: -45px 0;
+            }
+
+            .reveal.from-right {
+                translate: 45px 0;
+            }
+        }
+
+        /* AKSESIBILITAS */
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .bg-glow {
+                animation: none;
+            }
+
+            .reveal,
+            .reveal.from-left,
+            .reveal.from-right,
+            .reveal.show {
+                opacity: 1;
+                translate: none;
+                transition: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-effect" aria-hidden="true">
+        <div class="bg-grid"></div>
+        <div class="bg-glow bg-glow-1"></div>
+        <div class="bg-glow bg-glow-2"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                PORTOFOLIO <span>.</span>
+            </a>
+
+            <a href="index.html#projects" class="back-link">
+                ← Kembali ke Projects
+            </a>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- PROJECT HERO -->
+        <section class="project-hero">
+            <div class="container">
+
+                <div class="reveal">
+                    <span class="section-label">Project 01</span>
+
+                    <h1>
+                        Personal <span class="accent">Portfolio.</span>
+                    </h1>
+
+                    <p class="project-intro">
+                        Sebuah website pribadi untuk memperkenalkan diri,
+                        menampilkan project, dan membagikan minat saya di
+                        bidang teknologi. Dibuat dari nol menggunakan HTML,
+                        CSS, dan JavaScript tanpa framework.
+                    </p>
+
+                    <div class="tags">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                </div>
+
+                <div class="project-meta">
+                    <div class="meta-item reveal">
+                        <span>Tahun</span>
+                        <strong>2026</strong>
+                    </div>
+
+                    <div class="meta-item reveal">
+                        <span>Peran</span>
+                        <strong>Design & Development</strong>
+                    </div>
+
+                    <div class="meta-item reveal">
+                        <span>Status</span>
+                        <strong>Aktif dikembangkan</strong>
+                    </div>
+                </div>
+
+                <div class="hero-buttons reveal">
+                    <a href="index.html" class="btn btn-primary">
+                        Buka Website Lengkap ↗
+                    </a>
+
+                    <!-- Ganti dengan link repository portfolio kamu jika sudah ada -->
+                    <a
+                        href="https://github.com/Marcellio08"
+                        class="btn btn-secondary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Lihat di GitHub
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PREVIEW -->
+        <section class="preview-section">
+            <div class="container">
+
+                <div class="browser reveal">
+                    <div class="browser-bar">
+                        <div class="browser-dots">
+                            <i></i><i></i><i></i>
+                        </div>
+
+                        <div class="browser-url">leandermarcellio.com</div>
+                    </div>
+
+                    <div class="browser-screen" id="browserScreen">
+                        <!-- Pratinjau langsung dari index.html (harus satu folder) -->
+                        <iframe
+                            id="previewFrame"
+                            src="index.html"
+                            title="Pratinjau website portfolio"
+                            loading="lazy"
+                            tabindex="-1"
+                        ></iframe>
+                    </div>
+                </div>
+
+                <p class="preview-note">
+                    Pratinjau sekilas dari halaman utama website ini.
+                </p>
+
+            </div>
+        </section>
+
+        <!-- HIGHLIGHTS -->
+        <section class="highlights">
+            <div class="container">
+
+                <div class="reveal">
+                    <span class="section-label">Highlights</span>
+
+                    <h2 class="section-title">
+                        Fitur <span class="accent">utama.</span>
+                    </h2>
+                </div>
+
+                <div class="highlight-grid">
+
+                    <div class="highlight-card reveal">
+                        <div class="highlight-number">01</div>
+                        <h3>Animasi scroll</h3>
+                        <p>
+                            Setiap bagian muncul bergantian dari kiri dan
+                            kanan saat halaman digulir.
+                        </p>
+                    </div>
+
+                    <div class="highlight-card reveal">
+                        <div class="highlight-number">02</div>
+                        <h3>Desain responsif</h3>
+                        <p>
+                            Tampilan menyesuaikan layar laptop, tablet, dan
+                            HP dengan menu navigasi yang ringkas.
+                        </p>
+                    </div>
+
+                    <div class="highlight-card reveal">
+                        <div class="highlight-number">03</div>
+                        <h3>Tema gelap modern</h3>
+                        <p>
+                            Warna hitam dengan aksen hijau lime, ditambah
+                            background grid dan glow yang bergerak pelan.
+                        </p>
+                    </div>
+
+                    <div class="highlight-card reveal">
+                        <div class="highlight-number">04</div>
+                        <h3>Buku tamu</h3>
+                        <p>
+                            Pengunjung bisa meninggalkan nama, kesan, dan
+                            pesan langsung di website.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- NEXT -->
+        <section>
+            <div class="container">
+                <div class="next-box reveal">
+                    <h2>
+                        Ingin lihat <span class="accent">lebih banyak?</span>
+                    </h2>
+
+                    <div class="next-buttons">
+                        <a href="index.html#projects" class="btn btn-primary">
+                            ← Kembali ke Projects
+                        </a>
+
+                        <a href="index.html#contact" class="btn btn-secondary">
+                            Hubungi Saya
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-content">
+            <p>© 2026 Leander Marcellio. All rights reserved.</p>
+
+            <p>Made with <span>♥</span> and curiosity.</p>
+        </div>
+    </footer>
+
+    <script>
+        // PRATINJAU: perkecil iframe 1280px agar pas dengan lebar kotak
+
+        const browserScreen = document.getElementById("browserScreen");
+        const previewFrame = document.getElementById("previewFrame");
+
+        function fitPreview() {
+            const scale = browserScreen.clientWidth / 1280;
+            previewFrame.style.transform = "scale(" + scale + ")";
+        }
+
+        fitPreview();
+        window.addEventListener("resize", fitPreview);
+
+        // SCROLL ANIMATION: KIRI KE KANAN / KANAN KE KIRI
+
+        const revealElements = document.querySelectorAll(".reveal");
+
+        const observer = new IntersectionObserver(
+            function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("show");
+                    } else {
+                        entry.target.classList.remove("show");
+                    }
+                });
+            },
+            {
+                threshold: 0.15
+            }
+        );
+
+        revealElements.forEach(function (element) {
+            const siblings = Array.from(element.parentElement.children)
+                .filter(function (el) {
+                    return el.classList.contains("reveal");
+                });
+
+            const position = siblings.indexOf(element);
+
+            element.classList.add(position % 2 === 0 ? "from-left" : "from-right");
+            element.style.setProperty("--d", (position % 4) * 0.1 + "s");
+
+            observer.observe(element);
+        });
+    </script>
+
+</body>
+</html>
